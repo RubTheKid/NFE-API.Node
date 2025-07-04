@@ -11,7 +11,7 @@ const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
-            title: 'My API',
+            title: 'NFe Api - Node.js',
             version: '1.0.0',
             description: 'NFE Api - Node.js version',
         },
@@ -25,7 +25,7 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/health', async (req, res) => {
     try {
@@ -51,5 +51,5 @@ app.get('/', (req, res) => {
 
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
-    console.log('Swagger is running on http://localhost:3000/api-docs');
+    console.log('Swagger is running on http://localhost:3000/swagger');
 });

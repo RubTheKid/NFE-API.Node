@@ -10,6 +10,10 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./src/Nfe.Infrastructure/Data/migrations/createClientesTable.sql:/docker-entrypoint-initdb.d/01-create-clientes.sql
+      - ./src/Nfe.Infrastructure/Data/migrations/createProdutosTable.sql:/docker-entrypoint-initdb.d/02-create-produtos.sql
+      - ./src/Nfe.Infrastructure/Data/seeds/seedClientes.sql:/docker-entrypoint-initdb.d/03-seed-clientes.sql
+      - ./src/Nfe.Infrastructure/Data/seeds/seedProdutos.sql:/docker-entrypoint-initdb.d/04-seed-produtos.sql
     networks:
       - nfe-network
 
@@ -17,7 +21,7 @@ services:
     build: .
     container_name: nfe_api
     ports:
-      - "3010:3011"
+      - "3000:3000"
     environment:
       - DB_HOST=postgres
       - DB_USER=postgres

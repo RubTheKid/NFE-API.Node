@@ -17,10 +17,6 @@ class Telefone {
             numero: this.numero
         };
     }
-    
-    toString() {
-        return `(${this.ddd}) ${this.numero}`;
-    }
 }
 
 export default Telefone;
