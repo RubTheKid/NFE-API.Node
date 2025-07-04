@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: nfe_postgres
+    environment:
+      POSTGRES_DB: nfenodedb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - nfe-network
+
+  api:
+    build: .
+    container_name: nfe_api
+    ports:
+      - "3010:3011"
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_NAME=nfenodedb
+      - DB_PASSWORD=postgres
+      - DB_PORT=5432
+    depends_on:
+      - postgres
+    networks:
+      - nfe-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: nfe_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - nfe-network
+
+volumes:
+  postgres_data:
+
+networks:
+  nfe-network:
+    driver: bridge
